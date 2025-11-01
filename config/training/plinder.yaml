@@ -1,0 +1,35 @@
+ckpt: './checkpoints/Jan31-08:26:36_2.pth'
+
+data:
+  data: plinder
+  train_path: '/mnt/e/plinder_processed/pth'
+  test_path: '/mnt/e/plinder_processed/pth'
+
+train:
+  name: test
+  batch_size: 1
+  num_epochs: 2000
+  lr: 1.0e-4
+  weight_decay: 0.0
+  grad_norm: 1.0
+  lr_schedule: False
+  lr_decay: 0.999
+  ema: 0.999
+  print_interval: 1
+  save_interval: 1
+  loss_type: vf
+
+model:
+  name: af3
+  s_in: 19
+  z_in: 6
+  s_dim: 128
+  z_dim: 64
+  n_pf_layers: 16
+  n_atom_layers: 4
+  embed_mask: True
+  embed_aa: False
+  reset_backbone: False
+  random_augment: True
+
+

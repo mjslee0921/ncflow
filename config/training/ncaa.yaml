@@ -1,0 +1,38 @@
+ckpt: './checkpoints/Feb11-23:20:25_25.pth' # './checkpoints/Feb12-14:18:48_5.pth'
+
+data:
+  data: ncaa
+  train_path: './data/ncaa/processed/train_data_256.pth'
+  test_path: './data/ncaa/processed/test_data_256.pth'
+  code_to_idx: './data/ncaa/processed/code_to_idx.pth'
+  use_ncaa_splits: False
+  type:
+
+train:
+  name: test
+  batch_size: 1
+  num_epochs: 2000
+  lr: 2.0e-6
+  weight_decay: 0.0
+  grad_norm: 1.0
+  lr_schedule: False
+  lr_decay: 0.999
+  ema: 0.999
+  print_interval: 1
+  save_interval: 10
+  loss_type: vf
+
+model:
+  name: af3
+  s_in: 19
+  z_in: 6
+  s_dim: 128
+  z_dim: 64
+  n_pf_layers: 16
+  n_atom_layers: 4
+  embed_mask: True
+  embed_aa: False
+  reset_backbone: True
+  random_augment: True
+  add_noise: True
+

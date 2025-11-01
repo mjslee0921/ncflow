@@ -1,0 +1,8 @@
+torch
+tensorboard
+tqdm
+easydict
+biotite
+rdkit
+torch_geometric
+boltz[cuda]
