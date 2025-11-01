@@ -16,7 +16,7 @@ and placed under the `data` folder.
 
 Sampling can be done on a preprocessed test set with the following command:
 
-`python sampler.py ncaa`
+`python -m samplers.sampler ncaa`
 
 where `ncaa` refers to the YAML file in `config/inference/ncaa.yaml`.
 
@@ -36,9 +36,9 @@ This is to ensure that these bonds are included in the output SDF files.
 
 For Pubchem and Plinder sampling:
 
-`python sampler_pubchem.py pubchem`
+`python -m samplers.sampler_pubchem.py pubchem`
 
-`python sampler_plinder.py plinder`
+`python -m samplers.sampler_plinder.py plinder`
 
 ### Scoring
 
@@ -58,13 +58,13 @@ First, download the PubChem3D SDF files from here: https://ftp.ncbi.nlm.nih.gov/
 
 Then, you can run the following command:
 
-`python process_pubchem.py <path to folder with .sdf.gz> <outpath>`
+`python -m preprocessing.process_pubchem <path to folder with .sdf.gz> <outpath>`
 
 This will preprocess the SDF files into .pth files containing features necessary for pretraining.
 
 Then, you can run the command:
 
-`python trainer_pubchem.py pubchem`
+`python -m trainers.trainer_pubchem pubchem`
 
 where `pubchem` refers to the `config/training/pubchem.yaml` file.
 
@@ -73,13 +73,13 @@ where `pubchem` refers to the `config/training/pubchem.yaml` file.
 First, download the Plinder dataset (https://www.plinder.sh/) - the 2024/06 release is used for NCFlow. 
 You only need the `systems` folder from Plinder to process the dataset.
 
-Then, you can run the following command: `python process_plinder.py`
+Then, you can run the following command: `python -m preprocessing.process_plinder`
 
 Note that the input/output paths in the processing script is hard-coded, so you will need to revise accordingly.
 
 Then, you can train on the processed `pth` files with the command:
 
-`python trainer_plinder.py plinder`
+`python -m trainers.trainer_plinder plinder`
 
 where `plinder` refers to the `config/training/plinder.yaml` file.
 
@@ -90,11 +90,11 @@ the YAML file and add the flag `--resume`.
 
 First, you must download a snapshot of the PDB using conventional tools (ex. Biotite's `rcsb` class).
 
-Then you can run the processing script with `python process_ncaa.py`
+Then you can run the processing script with `python -m preprocessing.process_ncaa`
 
 Training is performed similarly to previous stages:
 
-`python trainer.py ncaa`
+`python -m trainers.trainer ncaa`
 
 ### Contact
 
