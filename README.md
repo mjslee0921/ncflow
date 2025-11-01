@@ -36,9 +36,9 @@ This is to ensure that these bonds are included in the output SDF files.
 
 For Pubchem and Plinder sampling:
 
-`python -m samplers.sampler_pubchem.py pubchem`
+`python -m samplers.sampler_pubchem pubchem`
 
-`python -m samplers.sampler_plinder.py plinder`
+`python -m samplers.sampler_plinder plinder`
 
 ### Scoring
 
