@@ -8,6 +8,12 @@ using flow matching”. In: bioRxiv (2025), pp. 2025–07 https://www.biorxiv.or
 
 ## Inference
 
+First, download checkpoints [here](https://drive.google.com/file/d/1xb9WB5Gh-hcymL_SscNkRoA6KYjaHXZw/view?usp=sharing)
+and place them in the `checkpoints` folder.
+
+Small toy datasets can also be downloaded [here](https://drive.google.com/file/d/1RsmNYX5Ob4fQPmhhAhHCwdf7alBFBA88/view?usp=sharing)
+and placed under the `data` folder.
+
 Sampling can be done on a preprocessed test set with the following command:
 
 `python sampler.py ncaa`
