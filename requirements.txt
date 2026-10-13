@@ -2,7 +2,7 @@ torch
 tensorboard
 tqdm
 easydict
-biotite
+biotite==1.0.1
 rdkit
 torch_geometric
 boltz[cuda]

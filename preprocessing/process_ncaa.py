@@ -54,17 +54,20 @@ code_data = {}
 for code in tqdm(list(all_metrics.keys())):
     result = requests.get(f'https://www.ebi.ac.uk/pdbe/api/pdb/compound/summary/{code}')
     result = result.json()[code][0]
+    compound_type = requests.get(f'https://data.rcsb.org/rest/v1/core/chemcomp/{code}').json()['chem_comp']['type']
     code_data[code] = {
         'name': result['name'],
+        'type': compound_type,
         'smiles': result['smiles'][-1],
     }
 
 torch.save(code_data, './data/ncaa/processed/code_data.pth')
 
-exclude = []
+exclude = [i for i in code_data.keys() if 'd-peptide' in code_data[i]['type'].lower()]
 exclude += ['MSE','SEC']
-# exclude += [i for i in code_data.keys() if all_metrics[i] < 10] # for nonredundant test set
-exclude += [i for i in code_data.keys() if all_metrics[i] >= 10]
+exclude += [i for i in code_data.keys() if 'terminus' in code_data[i]['type'].lower()]
+exclude += [i for i in code_data.keys() if all_metrics[i] < 10]
+# exclude += [i for i in code_data.keys() if all_metrics[i] >= 10] # for nonredundant test set
 
 out_filtered = copy.deepcopy(out)
 for i in out_filtered:
@@ -121,7 +124,7 @@ def process_structures_knn(p):
         ins_code = res.ins_code[0]
         chain_id = res.chain_id[0]
         if res_ca.size == 0: continue
-        if res_aa in code_data.keys():
+        if res_aa in code_data_filtered.keys():
             sc_coords = res[~bstruct.filter_peptide_backbone(res)]
 
             # identify interacting atoms with ncAA
@@ -152,7 +155,7 @@ def process_structures_knn(p):
             loss_mask = loss_mask[indices].astype(bool)
 
             tok_id_selected = tok_id[indices]
-            d = code_data[res_aa]
+            d = code_data_filtered[res_aa]
 
             # adj_matrix = bonds.adjacency_matrix()
 
@@ -183,6 +186,8 @@ torch.save(data_flattened, './data/ncaa/processed/data_256.pth')
 random.shuffle(data_flattened)
 num_train = int(0.9*len(data_flattened))
 train_data, test_data = data_flattened[:num_train], data_flattened[num_train:]
+train_data = [i for i in train_data if len(i['struct_data']) <= 256]
+test_data = [i for i in test_data if len(i['struct_data']) <= 256]
 torch.save(train_data,'./data/ncaa/processed/train_data_256.pth')
 torch.save(test_data,'./data/ncaa/processed/test_data_256.pth')
 
